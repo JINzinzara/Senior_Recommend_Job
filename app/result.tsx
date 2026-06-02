@@ -35,11 +35,11 @@ const GROUP_EMOJI: Record<string, string> = {
 };
 
 const JOB_COLORS = [
-  { bg: "#EBF5FB", accent: "#2E7D9F" },
-  { bg: "#E8F8F5", accent: "#1E8449" },
-  { bg: "#FEF9E7", accent: "#B7950B" },
-  { bg: "#F5EEF8", accent: "#7D3C98" },
-  { bg: "#FDEDEC", accent: "#C0392B" },
+  { bg: "#FEF9F3", accent: "#D4A574" },
+  { bg: "#FEF9F3", accent: "#C89860" },
+  { bg: "#FEF9F3", accent: "#B8874C" },
+  { bg: "#FEF9F3", accent: "#A87638" },
+  { bg: "#FEF9F3", accent: "#986524" },
 ];
 
 export default function ResultScreen() {
@@ -140,7 +140,7 @@ export default function ResultScreen() {
           회원님께 추천드리는{"\n"}일자리예요
         </Text>
         <Text style={[styles.headerSub, { color: colors.muted }]}>
-          총 {recommendations.length}개의 공고를 찾았어요 · 좌우로 넘겨보세요
+          총 {recommendations.length}개의 공고 · 좌우로 넘겨보세요
         </Text>
       </View>
 
@@ -186,7 +186,7 @@ export default function ResultScreen() {
               {
                 backgroundColor:
                   index === currentIndex ? colors.primary : colors.border,
-                width: index === currentIndex ? 24 : 8,
+                width: index === currentIndex ? 28 : 10,
               },
             ]}
           />
@@ -319,31 +319,31 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   loadingText: {
-    fontSize: 16,
+    fontSize: 18,
   },
   emptyEmoji: {
-    fontSize: 60,
-    marginBottom: 8,
+    fontSize: 68,
+    marginBottom: 12,
   },
   emptyTitle: {
-    fontSize: 22,
+    fontSize: 28,
     fontWeight: "700",
     textAlign: "center",
   },
   emptyDesc: {
-    fontSize: 16,
+    fontSize: 18,
     textAlign: "center",
-    lineHeight: 24,
+    lineHeight: 28,
   },
   retryButton: {
-    paddingHorizontal: 32,
-    paddingVertical: 14,
-    borderRadius: 14,
-    marginTop: 8,
+    paddingHorizontal: 36,
+    paddingVertical: 16,
+    borderRadius: 16,
+    marginTop: 12,
   },
   retryButtonText: {
     color: "#FFFFFF",
-    fontSize: 17,
+    fontSize: 19,
     fontWeight: "700",
   },
   header: {
@@ -353,26 +353,26 @@ const styles = StyleSheet.create({
   },
   headerBadge: {
     alignSelf: "flex-start",
-    paddingHorizontal: 12,
-    paddingVertical: 5,
-    borderRadius: 20,
-    marginBottom: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    borderRadius: 22,
+    marginBottom: 14,
   },
   headerBadgeText: {
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: "700",
     letterSpacing: 0.5,
   },
   headerTitle: {
-    fontSize: 26,
+    fontSize: 30,
     fontWeight: "700",
-    lineHeight: 36,
-    marginBottom: 8,
+    lineHeight: 40,
+    marginBottom: 10,
     letterSpacing: -0.5,
   },
   headerSub: {
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: 16,
+    lineHeight: 24,
   },
   flatListContent: {
     paddingHorizontal: CARD_MARGIN / 2,
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   cardInner: {
-    borderRadius: 24,
+    borderRadius: 26,
     borderWidth: 1,
     overflow: "hidden",
     shadowColor: "#000",
@@ -392,145 +392,145 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   cardBanner: {
-    padding: 20,
-    paddingBottom: 16,
+    padding: 22,
+    paddingBottom: 18,
   },
   cardBannerContent: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 8,
+    marginBottom: 10,
   },
   rankBadge: {
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    borderRadius: 12,
   },
   rankText: {
     color: "#FFFFFF",
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: "700",
   },
   cardBannerEmoji: {
-    fontSize: 36,
+    fontSize: 40,
   },
   cardJobType: {
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: "700",
     letterSpacing: 0.3,
   },
   cardBody: {
-    padding: 20,
-    gap: 14,
+    padding: 22,
+    gap: 16,
   },
   cardTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "700",
-    lineHeight: 28,
+    lineHeight: 32,
     letterSpacing: -0.3,
   },
   conditionRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    borderRadius: 12,
+    gap: 10,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 14,
   },
   conditionIcon: {
-    fontSize: 16,
+    fontSize: 18,
   },
   conditionText: {
-    fontSize: 15,
-    fontWeight: "500",
+    fontSize: 17,
+    fontWeight: "600",
     flex: 1,
-    lineHeight: 22,
+    lineHeight: 24,
   },
   divider: {
     height: 1,
   },
   reasonContainer: {
-    gap: 6,
+    gap: 8,
   },
   reasonLabel: {
-    fontSize: 12,
-    fontWeight: "600",
+    fontSize: 13,
+    fontWeight: "700",
     letterSpacing: 0.5,
     textTransform: "uppercase",
   },
   reasonText: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: "500",
+    fontSize: 18,
+    lineHeight: 28,
+    fontWeight: "600",
   },
   matchRateContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
+    gap: 12,
   },
   matchRateLabel: {
-    fontSize: 13,
-    fontWeight: "600",
-    width: 36,
+    fontSize: 14,
+    fontWeight: "700",
+    width: 42,
   },
   matchRateBar: {
     flex: 1,
-    height: 8,
-    backgroundColor: "#E5E7EB",
-    borderRadius: 4,
+    height: 10,
+    backgroundColor: "#E8D4B8",
+    borderRadius: 5,
     overflow: "hidden",
   },
   matchRateFill: {
     height: "100%",
-    borderRadius: 4,
+    borderRadius: 5,
   },
   matchRateValue: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "700",
-    width: 36,
+    width: 42,
     textAlign: "right",
   },
   cardFooter: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingVertical: 12,
+    paddingHorizontal: 22,
+    paddingVertical: 14,
     borderTopWidth: 1,
   },
   cardCounter: {
-    fontSize: 13,
-    fontWeight: "600",
+    fontSize: 15,
+    fontWeight: "700",
   },
   cardSwipeHint: {
-    fontSize: 13,
+    fontSize: 15,
   },
   indicatorContainer: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    gap: 6,
-    paddingVertical: 12,
+    gap: 8,
+    paddingVertical: 14,
   },
   indicator: {
-    height: 8,
-    borderRadius: 4,
+    height: 10,
+    borderRadius: 5,
   },
   bottomBar: {
     paddingHorizontal: 20,
-    paddingTop: 8,
+    paddingTop: 10,
     paddingBottom: 32,
     borderTopWidth: 1,
   },
   retryButtonFull: {
-    height: 54,
-    borderRadius: 14,
+    height: 60,
+    borderRadius: 16,
     borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
   },
   retryButtonFullText: {
-    fontSize: 17,
-    fontWeight: "600",
+    fontSize: 18,
+    fontWeight: "700",
   },
 });

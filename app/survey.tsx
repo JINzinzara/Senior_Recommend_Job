@@ -275,7 +275,7 @@ export default function SurveyScreen() {
         >
           <Text style={[styles.backArrow, { color: colors.foreground }]}>←</Text>
         </Pressable>
-        <Text style={[styles.stepText, { color: colors.muted }]}>
+        <Text style={[styles.stepText, { color: colors.foreground }]}>
           {currentStep + 1} / {totalSteps}
         </Text>
         <View style={styles.backButton} />
@@ -423,97 +423,97 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
   },
   backButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
+    width: 48,
+    height: 48,
+    borderRadius: 14,
     alignItems: "center",
     justifyContent: "center",
   },
   backArrow: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "600",
   },
   stepText: {
-    fontSize: 15,
-    fontWeight: "600",
+    fontSize: 18,
+    fontWeight: "700",
   },
   progressContainer: {
-    height: 6,
+    height: 8,
     marginHorizontal: 20,
-    borderRadius: 3,
+    borderRadius: 4,
     overflow: "hidden",
     marginBottom: 4,
   },
   progressBar: {
     height: "100%",
-    borderRadius: 3,
+    borderRadius: 4,
   },
   questionContainer: {
     flex: 1,
   },
   scrollContent: {
     paddingHorizontal: 20,
-    paddingTop: 24,
+    paddingTop: 28,
   },
   questionHeader: {
-    marginBottom: 24,
+    marginBottom: 28,
   },
   questionNumber: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "700",
-    marginBottom: 8,
+    marginBottom: 12,
     letterSpacing: 1,
   },
   questionText: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: "700",
-    lineHeight: 34,
-    marginBottom: 8,
+    lineHeight: 44,
+    marginBottom: 12,
     letterSpacing: -0.5,
   },
   hintText: {
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: 16,
+    lineHeight: 24,
   },
   optionsContainer: {
-    gap: 10,
+    gap: 12,
   },
   optionCard: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 16,
-    borderRadius: 16,
-    gap: 14,
-    minHeight: 68,
+    padding: 18,
+    borderRadius: 18,
+    gap: 16,
+    minHeight: 80,
   },
   optionEmoji: {
-    fontSize: 26,
-    width: 36,
+    fontSize: 32,
+    width: 40,
     textAlign: "center",
   },
   optionTextContainer: {
     flex: 1,
   },
   optionLabel: {
-    fontSize: 17,
-    fontWeight: "600",
-    lineHeight: 24,
+    fontSize: 19,
+    fontWeight: "700",
+    lineHeight: 28,
   },
   optionSub: {
-    fontSize: 13,
-    lineHeight: 18,
+    fontSize: 15,
+    lineHeight: 22,
     marginTop: 2,
   },
   checkmark: {
-    width: 26,
-    height: 26,
-    borderRadius: 13,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
   },
   checkmarkText: {
     color: "#FFFFFF",
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "700",
   },
   bottomBar: {
@@ -523,20 +523,20 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
   },
   nextButton: {
-    height: 58,
-    borderRadius: 16,
+    height: 64,
+    borderRadius: 18,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 8,
+    gap: 10,
   },
   nextButtonText: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "700",
     letterSpacing: 0.3,
   },
   nextButtonArrow: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "700",
   },
 });

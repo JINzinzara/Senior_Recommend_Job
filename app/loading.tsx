@@ -135,13 +135,13 @@ export default function LoadingScreen() {
         <View
           style={[
             styles.bgCircle1,
-            { backgroundColor: colors.primary, opacity: 0.06 },
+            { backgroundColor: colors.primary, opacity: 0.08 },
           ]}
         />
         <View
           style={[
             styles.bgCircle2,
-            { backgroundColor: colors.primary, opacity: 0.04 },
+            { backgroundColor: colors.primary, opacity: 0.05 },
           ]}
         />
 
@@ -244,46 +244,46 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   iconContainer: {
-    width: 120,
-    height: 120,
-    borderRadius: 36,
+    width: 140,
+    height: 140,
+    borderRadius: 40,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 40,
+    marginBottom: 48,
     position: "relative",
   },
   mainIcon: {
-    fontSize: 56,
+    fontSize: 64,
   },
   spinnerRing: {
     position: "absolute",
-    width: 140,
-    height: 140,
-    borderRadius: 70,
+    width: 160,
+    height: 160,
+    borderRadius: 80,
     borderWidth: 3,
     borderTopColor: "transparent",
     borderRightColor: "transparent",
   },
   title: {
-    fontSize: 22,
+    fontSize: 26,
     fontWeight: "700",
     textAlign: "center",
-    marginBottom: 12,
+    marginBottom: 16,
     letterSpacing: -0.3,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 18,
     textAlign: "center",
-    lineHeight: 24,
-    marginBottom: 40,
+    lineHeight: 28,
+    marginBottom: 48,
   },
   dotsContainer: {
     flexDirection: "row",
-    gap: 8,
+    gap: 10,
   },
   dot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
+    width: 12,
+    height: 12,
+    borderRadius: 6,
   },
 });
