@@ -18,124 +18,74 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const SURVEY_QUESTIONS = [
   {
     id: "Q1",
-    question: "나와 가장 잘 맞는\n성격은 무엇인가요?",
-    hint: "2개까지 선택 가능",
+    question: "나와 가장 잘 맞는\n성격은?",
     maxSelect: 2,
     required: true,
     options: [
-      { label: "친절하고 사람을 좋아해요", emoji: "😊", sub: "사람 중심" },
-      { label: "꼼꼼해요", emoji: "🔍", sub: "세밀한 작업 중심" },
-      { label: "성실하고 책임감 있어요", emoji: "💪", sub: "규칙·위생 준수 중심" },
-      { label: "창의적이에요", emoji: "🎨", sub: "예술·공예 중심" },
-      { label: "자연을 좋아해요", emoji: "🌿", sub: "생태·농촌 중심" },
+      { label: "친절하고 사람을 좋아해요" },
+      { label: "꼼꼼해요" },
+      { label: "성실하고 책임감 있어요" },
+      { label: "창의적이에요" },
+      { label: "자연을 좋아해요" },
     ],
   },
   {
     id: "Q2",
-    question: "가장 끌리는 일터 장면을\n골라주세요",
-    hint: "2개까지 선택 가능",
+    question: "가장 끌리는\n일터 장면은?",
     maxSelect: 2,
     required: true,
     options: [
-      {
-        label: "보육, 돌봄",
-        emoji: "👶",
-        sub: "영유아 보육, 아이돌봄, 어르신 요양지원",
-      },
-      {
-        label: "동네 관리 및 청소",
-        emoji: "🏢",
-        sub: "보안 경비, 환경미화, 가사지원",
-      },
-      {
-        label: "가게 운영",
-        emoji: "🛒",
-        sub: "매장 판매, 고객관리 및 응대",
-      },
-      {
-        label: "음식 만들기",
-        emoji: "🍳",
-        sub: "음식조리, 한식, 김치·반찬 가공",
-      },
-      {
-        label: "식물 가꾸기",
-        emoji: "🌱",
-        sub: "채소재배, 과수재배 등 농업 활동",
-      },
-      {
-        label: "행사 및 문화 돕기",
-        emoji: "🎭",
-        sub: "문화·예술기획, 자원봉사관리",
-      },
-      {
-        label: "서류 정리",
-        emoji: "📋",
-        sub: "사무행정, 기록물 관리",
-      },
-      {
-        label: "교육 및 상담",
-        emoji: "📚",
-        sub: "평생교육, 보건교육, 청소년상담",
-      },
-      {
-        label: "카페 및 바리스타",
-        emoji: "☕",
-        sub: "커피 추출, 음료 제조",
-      },
+      { label: "보육, 돌봄" },
+      { label: "동네 관리 및 청소" },
+      { label: "가게 운영" },
+      { label: "음식 만들기" },
+      { label: "식물 가꾸기" },
+      { label: "행사 및 문화 돕기" },
+      { label: "서류 정리" },
+      { label: "교육 및 상담" },
+      { label: "카페 및 바리스타" },
     ],
   },
   {
     id: "Q3",
-    question: "하루에 감당할 수 있는\n활동량은 어느 정도인가요?",
-    hint: "1개 선택",
+    question: "하루에 감당할 수 있는\n활동량은?",
     maxSelect: 1,
     required: true,
     options: [
-      { label: "주로 앉아서", emoji: "🪑", sub: "사무·행정 위주" },
-      { label: "가볍게 걷기", emoji: "🚶", sub: "실내 이동 포함" },
-      { label: "야외 활동 가능", emoji: "🌤️", sub: "야외 근무 가능" },
+      { label: "주로 앉아서" },
+      { label: "가볍게 걷기" },
+      { label: "야외 활동 가능" },
     ],
   },
   {
     id: "Q4",
-    question: "선호하시는 일터의\n환경은 어디인가요?",
-    hint: "1개 선택",
+    question: "선호하는 일터\n환경은?",
     maxSelect: 1,
     required: true,
     options: [
-      { label: "실내", emoji: "🏠", sub: "건물 내부 근무" },
-      { label: "실외", emoji: "🌳", sub: "야외 근무" },
-      { label: "상관없음", emoji: "✨", sub: "모두 괜찮아요" },
+      { label: "실내" },
+      { label: "실외" },
+      { label: "상관없음" },
     ],
   },
   {
     id: "Q5",
-    question: "일주일에 몇 일 정도\n근무하기를 희망하시나요?",
-    hint: "1개 선택",
+    question: "일주일에 몇 일\n근무하기를 원하세요?",
     maxSelect: 1,
     required: true,
     options: [
-      { label: "짧게", emoji: "📅", sub: "주 1~3일" },
-      { label: "4~5일", emoji: "🗓️", sub: "주 4~5일" },
+      { label: "짧게" },
+      { label: "4~5일" },
     ],
   },
   {
     id: "Q6",
-    question: "보유 중인 자격증이 있다면\n체크해주세요!",
-    hint: "없다면 '다음'을 눌러주세요",
+    question: "보유 중인\n자격증은?",
     maxSelect: 10,
     required: false,
     options: [
-      {
-        label: "사회복지사 1급/2급 자격증",
-        emoji: "🏅",
-        sub: "사회복지 관련 업무 우대",
-      },
-      {
-        label: "요양보호사 자격증",
-        emoji: "🏅",
-        sub: "요양·돌봄 업무 우대",
-      },
+      { label: "사회복지사 1급/2급 자격증" },
+      { label: "요양보호사 자격증" },
     ],
   },
 ];
@@ -305,14 +255,11 @@ export default function SurveyScreen() {
         >
           {/* 질문 */}
           <View style={styles.questionHeader}>
-            <Text style={[styles.questionNumber, { color: colors.primary }]}>
-              Q{currentStep + 1}
-            </Text>
             <Text style={[styles.questionText, { color: colors.foreground }]}>
               {currentQuestion.question}
             </Text>
-            <Text style={[styles.hintText, { color: colors.muted }]}>
-              {currentQuestion.hint}
+            <Text style={[styles.hintText, { color: "#EF4444" }]}>
+              {currentQuestion.maxSelect}개까지 선택 가능
             </Text>
           </View>
 
@@ -334,21 +281,15 @@ export default function SurveyScreen() {
                     pressed && { opacity: 0.8, transform: [{ scale: 0.98 }] },
                   ]}
                 >
-                  <Text style={styles.optionEmoji}>{option.emoji}</Text>
-                  <View style={styles.optionTextContainer}>
+                  <View style={styles.optionContent}>
                     <Text
                       style={[
                         styles.optionLabel,
-                        { color: isSelected ? colors.primary : colors.foreground },
+                        { color: colors.foreground },
                       ]}
                     >
                       {option.label}
                     </Text>
-                    {option.sub ? (
-                      <Text style={[styles.optionSub, { color: colors.muted }]}>
-                        {option.sub}
-                      </Text>
-                    ) : null}
                   </View>
                   {isSelected && (
                     <View
@@ -399,14 +340,6 @@ export default function SurveyScreen() {
           >
             {isLastStep ? "결과 보기" : "다음"}
           </Text>
-          <Text
-            style={[
-              styles.nextButtonArrow,
-              { color: isAnswered ? "#FFFFFF" : colors.muted },
-            ]}
-          >
-            {isLastStep ? "🎯" : "→"}
-          </Text>
         </Pressable>
       </View>
     </ScreenContainer>
@@ -456,64 +389,49 @@ const styles = StyleSheet.create({
     paddingTop: 28,
   },
   questionHeader: {
-    marginBottom: 28,
-  },
-  questionNumber: {
-    fontSize: 16,
-    fontWeight: "700",
-    marginBottom: 12,
-    letterSpacing: 1,
+    marginBottom: 32,
   },
   questionText: {
-    fontSize: 32,
+    fontSize: 38,
     fontWeight: "700",
-    lineHeight: 44,
-    marginBottom: 12,
+    lineHeight: 50,
+    marginBottom: 14,
     letterSpacing: -0.5,
   },
   hintText: {
     fontSize: 16,
     lineHeight: 24,
+    fontWeight: "600",
   },
   optionsContainer: {
-    gap: 12,
+    gap: 14,
   },
   optionCard: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 18,
+    padding: 20,
     borderRadius: 18,
     gap: 16,
-    minHeight: 80,
+    minHeight: 76,
   },
-  optionEmoji: {
-    fontSize: 32,
-    width: 40,
-    textAlign: "center",
-  },
-  optionTextContainer: {
+  optionContent: {
     flex: 1,
   },
   optionLabel: {
-    fontSize: 19,
+    fontSize: 22,
     fontWeight: "700",
-    lineHeight: 28,
-  },
-  optionSub: {
-    fontSize: 15,
-    lineHeight: 22,
-    marginTop: 2,
+    lineHeight: 32,
   },
   checkmark: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
     alignItems: "center",
     justifyContent: "center",
   },
   checkmarkText: {
     color: "#FFFFFF",
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "700",
   },
   bottomBar: {
@@ -523,20 +441,14 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
   },
   nextButton: {
-    height: 64,
+    height: 68,
     borderRadius: 18,
-    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 10,
   },
   nextButtonText: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "700",
     letterSpacing: 0.3,
-  },
-  nextButtonArrow: {
-    fontSize: 20,
-    fontWeight: "700",
   },
 });
