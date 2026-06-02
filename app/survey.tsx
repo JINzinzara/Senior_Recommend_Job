@@ -210,7 +210,7 @@ export default function SurveyScreen() {
 
   return (
     <ScreenContainer
-      containerClassName="bg-background"
+      containerClassName="bg-white"
       edges={["top", "left", "right"]}
     >
       {/* 헤더 */}
@@ -219,25 +219,25 @@ export default function SurveyScreen() {
           onPress={handleBack}
           style={({ pressed }) => [
             styles.backButton,
-            { backgroundColor: colors.surface },
+            { backgroundColor: "#F5E6D3" },
             pressed && { opacity: 0.7 },
           ]}
         >
-          <Text style={[styles.backArrow, { color: colors.foreground }]}>←</Text>
+          <Text style={styles.backArrow}>←</Text>
         </Pressable>
-        <Text style={[styles.stepText, { color: colors.foreground }]}>
+        <Text style={styles.stepText}>
           {currentStep + 1} / {totalSteps}
         </Text>
         <View style={styles.backButton} />
       </View>
 
       {/* 진행 바 */}
-      <View style={[styles.progressContainer, { backgroundColor: colors.border }]}>
+      <View style={[styles.progressContainer, { backgroundColor: "#E8D4B8" }]}>
         <Animated.View
           style={[
             styles.progressBar,
             {
-              backgroundColor: colors.primary,
+              backgroundColor: "#D4A574",
               width: progressAnim.interpolate({
                 inputRange: [0, 1],
                 outputRange: ["0%", "100%"],
@@ -255,10 +255,10 @@ export default function SurveyScreen() {
         >
           {/* 질문 */}
           <View style={styles.questionHeader}>
-            <Text style={[styles.questionText, { color: colors.foreground }]}>
+            <Text style={styles.questionText}>
               {currentQuestion.question}
             </Text>
-            <Text style={[styles.hintText, { color: "#EF4444" }]}>
+            <Text style={styles.hintText}>
               {currentQuestion.maxSelect}개까지 선택 가능
             </Text>
           </View>
@@ -274,20 +274,15 @@ export default function SurveyScreen() {
                   style={({ pressed }) => [
                     styles.optionCard,
                     {
-                      backgroundColor: isSelected ? colors.accent : colors.surface,
-                      borderColor: isSelected ? colors.primary : colors.border,
+                      backgroundColor: isSelected ? "#F5E6D3" : "#FFFFFF",
+                      borderColor: isSelected ? "#D4A574" : "#E8D4B8",
                       borderWidth: isSelected ? 2 : 1,
                     },
                     pressed && { opacity: 0.8, transform: [{ scale: 0.98 }] },
                   ]}
                 >
                   <View style={styles.optionContent}>
-                    <Text
-                      style={[
-                        styles.optionLabel,
-                        { color: colors.foreground },
-                      ]}
-                    >
+                    <Text style={styles.optionLabel}>
                       {option.label}
                     </Text>
                   </View>
@@ -295,7 +290,7 @@ export default function SurveyScreen() {
                     <View
                       style={[
                         styles.checkmark,
-                        { backgroundColor: colors.primary },
+                        { backgroundColor: "#D4A574" },
                       ]}
                     >
                       <Text style={styles.checkmarkText}>✓</Text>
@@ -315,7 +310,7 @@ export default function SurveyScreen() {
       <View
         style={[
           styles.bottomBar,
-          { backgroundColor: colors.background, borderTopColor: colors.border },
+          { backgroundColor: "#FFFFFF", borderTopColor: "#E8D4B8" },
         ]}
       >
         <Pressable
@@ -324,7 +319,7 @@ export default function SurveyScreen() {
           style={({ pressed }) => [
             styles.nextButton,
             {
-              backgroundColor: isAnswered ? colors.primary : colors.inactive,
+              backgroundColor: isAnswered ? "#D4A574" : "#D4C4B0",
             },
             pressed && isAnswered && {
               opacity: 0.85,
@@ -335,7 +330,7 @@ export default function SurveyScreen() {
           <Text
             style={[
               styles.nextButtonText,
-              { color: isAnswered ? "#FFFFFF" : colors.muted },
+              { color: isAnswered ? "#FFFFFF" : "#8B6F47" },
             ]}
           >
             {isLastStep ? "결과 보기" : "다음"}
@@ -365,10 +360,12 @@ const styles = StyleSheet.create({
   backArrow: {
     fontSize: 24,
     fontWeight: "600",
+    color: "#5C3D2E",
   },
   stepText: {
     fontSize: 18,
     fontWeight: "700",
+    color: "#5C3D2E",
   },
   progressContainer: {
     height: 8,
@@ -397,11 +394,13 @@ const styles = StyleSheet.create({
     lineHeight: 50,
     marginBottom: 14,
     letterSpacing: -0.5,
+    color: "#5C3D2E",
   },
   hintText: {
     fontSize: 16,
     lineHeight: 24,
     fontWeight: "600",
+    color: "#EF4444",
   },
   optionsContainer: {
     gap: 14,
@@ -421,6 +420,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "700",
     lineHeight: 32,
+    color: "#5C3D2E",
   },
   checkmark: {
     width: 32,

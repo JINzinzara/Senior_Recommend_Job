@@ -17,15 +17,10 @@ export default function WelcomeScreen() {
   };
 
   return (
-    <View
-      style={[
-        styles.container,
-        { backgroundColor: colors.background },
-      ]}
-    >
+    <View style={styles.container}>
       <View style={styles.content}>
-        {/* 메인 문구 - 매우 크고 진한 색상 */}
-        <Text style={[styles.mainText, { color: colors.foreground }]}>
+        {/* 메인 문구 - 진한 브라운 */}
+        <Text style={styles.mainText}>
           일자리 찾고{"\n"}계신가요?
         </Text>
       </View>
@@ -50,6 +45,7 @@ export default function WelcomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#FFFFFF",
     position: "relative",
   },
   content: {
@@ -64,6 +60,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     lineHeight: 72,
     letterSpacing: -1,
+    color: "#5C3D2E",
   },
   buttonContainer: {
     paddingHorizontal: 24,

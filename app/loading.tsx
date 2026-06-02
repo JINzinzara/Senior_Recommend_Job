@@ -127,7 +127,7 @@ export default function LoadingScreen() {
 
   return (
     <ScreenContainer
-      containerClassName="bg-background"
+      containerClassName="bg-white"
       edges={["top", "bottom", "left", "right"]}
     >
       <View style={styles.container}>
@@ -135,13 +135,13 @@ export default function LoadingScreen() {
         <View
           style={[
             styles.bgCircle1,
-            { backgroundColor: colors.primary, opacity: 0.08 },
+            { backgroundColor: "#D4A574", opacity: 0.08 },
           ]}
         />
         <View
           style={[
             styles.bgCircle2,
-            { backgroundColor: colors.primary, opacity: 0.05 },
+            { backgroundColor: "#D4A574", opacity: 0.05 },
           ]}
         />
 
@@ -149,27 +149,27 @@ export default function LoadingScreen() {
         <Animated.View
           style={[
             styles.iconContainer,
-            { backgroundColor: colors.accent, transform: [{ scale: pulseAnim }] },
+            { backgroundColor: "#F5E6D3", transform: [{ scale: pulseAnim }] },
           ]}
         >
           <Text style={styles.mainIcon}>💼</Text>
           <Animated.View
             style={[
-              styles.spinnerRing,
-              { borderColor: colors.primary, transform: [{ rotate: spin }] },
+            styles.spinnerRing,
+            { borderColor: "#D4A574", transform: [{ rotate: spin }] },
             ]}
           />
         </Animated.View>
 
         {/* 텍스트 */}
-        <Text style={[styles.title, { color: colors.foreground }]}>
+        <Text style={[styles.title, { color: "#5C3D2E" }]}>
           맞춤 일자리를 찾고 있어요
         </Text>
 
         <Animated.Text
           style={[
             styles.subtitle,
-            { color: colors.muted, opacity: messageAnim },
+            { color: "#8B6F47", opacity: messageAnim },
           ]}
         >
           {messageRef.current}
@@ -178,7 +178,7 @@ export default function LoadingScreen() {
         {/* 점 인디케이터 */}
         <View style={styles.dotsContainer}>
           {[0, 1, 2].map((i) => (
-            <DotPulse key={i} delay={i * 200} color={colors.primary} />
+            <DotPulse key={i} delay={i * 200} color="#D4A574" />
           ))}
         </View>
       </View>

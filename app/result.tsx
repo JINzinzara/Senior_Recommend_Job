@@ -90,9 +90,9 @@ export default function ResultScreen() {
 
   if (!isLoaded) {
     return (
-      <ScreenContainer containerClassName="bg-background" edges={["top", "bottom", "left", "right"]}>
+      <ScreenContainer containerClassName="bg-white" edges={["top", "bottom", "left", "right"]}>
         <View style={styles.centerContainer}>
-          <Text style={[styles.loadingText, { color: colors.muted }]}>불러오는 중...</Text>
+          <Text style={[styles.loadingText, { color: "#8B6F47" }]}>불러오는 중...</Text>
         </View>
       </ScreenContainer>
     );
@@ -100,20 +100,20 @@ export default function ResultScreen() {
 
   if (recommendations.length === 0) {
     return (
-      <ScreenContainer containerClassName="bg-background" edges={["top", "bottom", "left", "right"]}>
+      <ScreenContainer containerClassName="bg-white" edges={["top", "bottom", "left", "right"]}>
         <View style={styles.centerContainer}>
           <Text style={styles.emptyEmoji}>🔍</Text>
-          <Text style={[styles.emptyTitle, { color: colors.foreground }]}>
+          <Text style={[styles.emptyTitle, { color: "#5C3D2E" }]}>
             추천 공고를 찾지 못했어요
           </Text>
-          <Text style={[styles.emptyDesc, { color: colors.muted }]}>
+          <Text style={[styles.emptyDesc, { color: "#8B6F47" }]}>
             설문 응답을 다시 확인해 주세요
           </Text>
           <Pressable
             onPress={handleRetry}
             style={({ pressed }) => [
               styles.retryButton,
-              { backgroundColor: colors.primary },
+              { backgroundColor: "#D4A574" },
               pressed && { opacity: 0.85, transform: [{ scale: 0.97 }] },
             ]}
           >
@@ -126,20 +126,20 @@ export default function ResultScreen() {
 
   return (
     <ScreenContainer
-      containerClassName="bg-background"
+      containerClassName="bg-white"
       edges={["top", "left", "right"]}
     >
       {/* 헤더 */}
       <View style={styles.header}>
-        <View style={[styles.headerBadge, { backgroundColor: colors.accent }]}>
-          <Text style={[styles.headerBadgeText, { color: colors.primary }]}>
+        <View style={[styles.headerBadge, { backgroundColor: "#F5E6D3" }]}>
+          <Text style={[styles.headerBadgeText, { color: "#D4A574" }]}>
             AI 맞춤 추천
           </Text>
         </View>
-        <Text style={[styles.headerTitle, { color: colors.foreground }]}>
+        <Text style={[styles.headerTitle, { color: "#5C3D2E" }]}>
           회원님께 추천드리는{"\n"}일자리예요
         </Text>
-        <Text style={[styles.headerSub, { color: colors.muted }]}>
+        <Text style={[styles.headerSub, { color: "#8B6F47" }]}>
           총 {recommendations.length}개의 공고 · 좌우로 넘겨보세요
         </Text>
       </View>
@@ -185,7 +185,7 @@ export default function ResultScreen() {
               styles.indicator,
               {
                 backgroundColor:
-                  index === currentIndex ? colors.primary : colors.border,
+                  index === currentIndex ? "#D4A574" : "#E8D4B8",
                 width: index === currentIndex ? 28 : 10,
               },
             ]}
@@ -194,16 +194,16 @@ export default function ResultScreen() {
       </View>
 
       {/* 하단 버튼 */}
-      <View style={[styles.bottomBar, { borderTopColor: colors.border }]}>
+      <View style={[styles.bottomBar, { borderTopColor: "#E8D4B8" }]}>
         <Pressable
           onPress={handleRetry}
           style={({ pressed }) => [
             styles.retryButtonFull,
-            { backgroundColor: colors.surface, borderColor: colors.border },
+            { backgroundColor: "#FFFFFF", borderColor: "#E8D4B8" },
             pressed && { opacity: 0.8 },
           ]}
         >
-          <Text style={[styles.retryButtonFullText, { color: colors.foreground }]}>
+          <Text style={[styles.retryButtonFullText, { color: "#5C3D2E" }]}>
             🔄 다시 설문하기
           </Text>
         </Pressable>
@@ -230,7 +230,7 @@ function JobCard({
   return (
     <View style={[styles.card, { width: CARD_WIDTH, marginHorizontal: CARD_MARGIN / 2 }]}>
       {/* 카드 내부 */}
-      <View style={[styles.cardInner, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+      <View style={[styles.cardInner, { backgroundColor: "#FFFFFF", borderColor: "#E8D4B8" }]}>
         {/* 카드 상단 색상 배너 */}
         <View style={[styles.cardBanner, { backgroundColor: bgColor }]}>
           <View style={styles.cardBannerContent}>
@@ -247,27 +247,27 @@ function JobCard({
         {/* 카드 본문 */}
         <View style={styles.cardBody}>
           {/* 공고명 */}
-          <Text style={[styles.cardTitle, { color: colors.foreground }]}>
+          <Text style={[styles.cardTitle, { color: "#5C3D2E" }]}>
             {job.채용공고명}
           </Text>
 
           {/* 근무 조건 */}
-          <View style={[styles.conditionRow, { backgroundColor: colors.accent }]}>
+          <View style={[styles.conditionRow, { backgroundColor: "#F5E6D3" }]}>
             <Text style={styles.conditionIcon}>📅</Text>
-            <Text style={[styles.conditionText, { color: colors.foreground }]}>
+            <Text style={[styles.conditionText, { color: "#5C3D2E" }]}>
               {job.모집요강}
             </Text>
           </View>
 
           {/* 구분선 */}
-          <View style={[styles.divider, { backgroundColor: colors.border }]} />
+          <View style={[styles.divider, { backgroundColor: "#E8D4B8" }]} />
 
           {/* 추천 이유 */}
           <View style={styles.reasonContainer}>
-            <Text style={[styles.reasonLabel, { color: colors.muted }]}>
+            <Text style={[styles.reasonLabel, { color: "#8B6F47" }]}>
               추천 이유
             </Text>
-            <Text style={[styles.reasonText, { color: colors.foreground }]}>
+            <Text style={[styles.reasonText, { color: "#5C3D2E" }]}>
               {job.reason}
             </Text>
           </View>
@@ -275,7 +275,7 @@ function JobCard({
           {/* 일치율 */}
           {job.matchRate !== undefined && (
             <View style={styles.matchRateContainer}>
-              <Text style={[styles.matchRateLabel, { color: colors.muted }]}>
+              <Text style={[styles.matchRateLabel, { color: "#8B6F47" }]}>
                 일치율
               </Text>
               <View style={styles.matchRateBar}>
@@ -297,11 +297,11 @@ function JobCard({
         </View>
 
         {/* 카드 하단 카운터 */}
-        <View style={[styles.cardFooter, { borderTopColor: colors.border }]}>
-          <Text style={[styles.cardCounter, { color: colors.muted }]}>
+        <View style={[styles.cardFooter, { borderTopColor: "#E8D4B8" }]}>
+          <Text style={[styles.cardCounter, { color: "#8B6F47" }]}>
             {index + 1} / {total}
           </Text>
-          <Text style={[styles.cardSwipeHint, { color: colors.muted }]}>
+          <Text style={[styles.cardSwipeHint, { color: "#8B6F47" }]}>
             {index < total - 1 ? "다음 공고 →" : "마지막 공고"}
           </Text>
         </View>
