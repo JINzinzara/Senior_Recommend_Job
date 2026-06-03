@@ -36,7 +36,7 @@ export default function WelcomeScreen() {
             pressed && { opacity: 0.85, transform: [{ scale: 0.97 }] },
           ]}
         >
-          <Text style={styles.startButtonText}>시작하기</Text>
+          <Text style={styles.startButtonText}>찾기</Text>
         </Pressable>
       </View>
     </View>

@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { router, publicProcedure } from "./_core/trpc";
-import { invokeLLM } from "./_core/llm";
+import Anthropic from "@anthropic-ai/sdk";
+import { ENV } from "./_core/env";
 import {
   surveyToNCS,
   filterJobs,
@@ -67,25 +68,15 @@ export const appRouter = router({
         const prompt = buildPrompt(answers, ncsResult, sortedMapped.slice(0, 20), sortedUnmapped.slice(0, 10), userRegion);
 
         try {
-          const response = await invokeLLM({
-            messages: [
-              {
-                role: "system",
-                content:
-                  "당신은 노인 일자리 추천 전문가입니다. 반드시 JSON 형식으로만 응답하세요. JSON 코드 블록(```json)은 제거하고 순수 JSON만 응답하세요.",
-              },
-              { role: "user", content: prompt },
-            ],
-            response_format: { type: "json_object" },
+          const client = new Anthropic({ apiKey: ENV.anthropicApiKey });
+          const response = await client.messages.create({
+            model: "claude-sonnet-4-5",
+            max_tokens: 2000,
+            system: "당신은 노인 일자리 추천 전문가입니다. 반드시 JSON 형식으로만 응답하세요. JSON 코드 블록(```json)은 제거하고 순수 JSON만 응답하세요.",
+            messages: [{ role: "user", content: prompt }],
           });
 
-          let raw = response.choices[0]?.message?.content ?? "{}";
-
-          if (Array.isArray(raw)) {
-            const textContent = raw.find((c: any) => c.type === "text") as any;
-            raw = textContent?.text ?? "{}";
-          }
-
+          let raw = (response.content[0] as any)?.text ?? "{}";
           raw = String(raw).replace(/^```json\s*/i, "").replace(/```\s*$/, "").trim();
 
           let parsed: { recommendations?: JobRecommendation[] };

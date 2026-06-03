@@ -144,7 +144,7 @@ export default function SurveyScreen() {
     const key = questionKey;
 
     if (maxSelect === 1) {
-      setAnswers((prev) => ({ ...prev, [key]: [option] }));
+      setAnswers((prev) => ({ ...prev, [key]: option }));
     } else {
       setAnswers((prev) => {
         const current = (prev[key] as string[]) ?? [];
@@ -232,7 +232,7 @@ export default function SurveyScreen() {
   return (
     <ScreenContainer
       containerClassName="bg-white"
-      edges={["top", "left", "right"]}
+      edges={["top", "left", "right", "bottom"]}
     >
       {/* 헤더 */}
       <View style={styles.header}>
@@ -280,7 +280,9 @@ export default function SurveyScreen() {
               {currentQuestion.question}
             </Text>
             <Text style={styles.hintText}>
-              {currentQuestion.maxSelect}개까지 선택 가능
+              {currentQuestion.id === "Q6"
+                ? "없을 시 다음을 눌러주세요"
+                : `${currentQuestion.maxSelect}개까지 선택 가능`}
             </Text>
           </View>
 
@@ -295,35 +297,26 @@ export default function SurveyScreen() {
                   style={({ pressed }) => [
                     styles.optionCard,
                     {
-                      backgroundColor: isSelected ? "#F5E6D3" : "#FFFFFF",
+                      backgroundColor: isSelected ? "#D4A574" : "#FFFFFF",
                       borderColor: isSelected ? "#D4A574" : "#E8D4B8",
-                      borderWidth: isSelected ? 2 : 1,
+                      borderWidth: 1.5,
                     },
                     pressed && { opacity: 0.8, transform: [{ scale: 0.98 }] },
                   ]}
                 >
-                  <View style={styles.optionContent}>
-                    <Text style={styles.optionLabel}>
-                      {option.label}
-                    </Text>
-                  </View>
-                  {isSelected && (
-                    <View
-                      style={[
-                        styles.checkmark,
-                        { backgroundColor: "#D4A574" },
-                      ]}
-                    >
-                      <Text style={styles.checkmarkText}>✓</Text>
-                    </View>
-                  )}
+                  <Text style={[
+                    styles.optionLabel,
+                    { color: isSelected ? "#FFFFFF" : "#5C3D2E" },
+                  ]}>
+                    {option.label}
+                  </Text>
                 </Pressable>
               );
             })}
           </View>
 
-          {/* 하단 여백 (버튼 공간) */}
-          <View style={{ height: 100 }} />
+          {/* 하단 여백 */}
+          <View style={{ height: 24 }} />
         </ScrollView>
       </Animated.View>
 
@@ -427,38 +420,22 @@ const styles = StyleSheet.create({
     gap: 14,
   },
   optionCard: {
-    flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     padding: 20,
     borderRadius: 18,
-    gap: 16,
     minHeight: 76,
-  },
-  optionContent: {
-    flex: 1,
   },
   optionLabel: {
     fontSize: 22,
     fontWeight: "700",
     lineHeight: 32,
-    color: "#5C3D2E",
-  },
-  checkmark: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  checkmarkText: {
-    color: "#FFFFFF",
-    fontSize: 18,
-    fontWeight: "700",
+    textAlign: "center",
   },
   bottomBar: {
     paddingHorizontal: 20,
     paddingTop: 12,
-    paddingBottom: 32,
+    paddingBottom: 16,
     borderTopWidth: 1,
   },
   nextButton: {

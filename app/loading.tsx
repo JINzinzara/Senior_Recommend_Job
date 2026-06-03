@@ -93,15 +93,23 @@ export default function LoadingScreen() {
           ? (JSON.parse(locRaw) as { latitude: number; longitude: number })
           : undefined;
 
-        const result = await recommendMutation.mutateAsync({
-          Q1: answers.Q1 ?? [],
-          Q2: answers.Q2 ?? [],
-          Q3: answers.Q3 ?? "상관없음",
-          Q4: answers.Q4 ?? "상관없음",
-          Q5: answers.Q5 ?? "4~5일",
-          Q6: answers.Q6 ?? [],
-          location,
-        });
+        // 30초 타임아웃 — 서버 무응답 시 결과 화면으로 이동
+        const timeoutPromise = new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error("timeout")), 30000)
+        );
+
+        const result = await Promise.race([
+          recommendMutation.mutateAsync({
+            Q1: answers.Q1 ?? [],
+            Q2: answers.Q2 ?? [],
+            Q3: answers.Q3 ?? "상관없음",
+            Q4: answers.Q4 ?? "상관없음",
+            Q5: answers.Q5 ?? "4~5일",
+            Q6: answers.Q6 ?? [],
+            location,
+          }),
+          timeoutPromise,
+        ]);
 
         await AsyncStorage.setItem(
           "recommendationResult",

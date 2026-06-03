@@ -15,9 +15,17 @@ import "../global.css";
 
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
+// useColorScheme은 AppThemeProvider 안에서만 사용 가능하므로 분리
+function NavigationThemeWrapper({ children }: { children: React.ReactNode }) {
   const colorScheme = useColorScheme();
+  return (
+    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      {children}
+    </ThemeProvider>
+  );
+}
 
+export default function RootLayout() {
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() => createTRPCClient());
 
@@ -37,7 +45,7 @@ export default function RootLayout() {
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         <AppThemeProvider>
-          <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+          <NavigationThemeWrapper>
             <GestureHandlerRootView style={{ flex: 1 }}>
               <Stack screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="index" />
@@ -47,7 +55,7 @@ export default function RootLayout() {
               </Stack>
               <StatusBar style="auto" />
             </GestureHandlerRootView>
-          </ThemeProvider>
+          </NavigationThemeWrapper>
         </AppThemeProvider>
       </QueryClientProvider>
     </trpc.Provider>
