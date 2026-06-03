@@ -44,7 +44,6 @@ export default function RootLayout() {
                 <Stack.Screen name="survey" />
                 <Stack.Screen name="loading" />
                 <Stack.Screen name="result" />
-                <Stack.Screen name="(tabs)" />
               </Stack>
               <StatusBar style="auto" />
             </GestureHandlerRootView>
