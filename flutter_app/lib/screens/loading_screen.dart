@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import '../services/api_service.dart';
 import 'result_screen.dart';
@@ -13,7 +14,12 @@ class _LoadingScreenState extends State<LoadingScreen> with TickerProviderStateM
   late final AnimationController _dotCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 1200))..repeat();
   late final AnimationController _pulseCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 1500))..repeat(reverse: true);
 
-  final List<String> _msgs = ['AI가 공고를 분석하는 중...','설문 답변과 일치하는 공고 찾는 중...','지역 정보를 확인하는 중...','최적의 일자리를 선정하는 중...'];
+  static const List<String> _allMsgs = [
+    '공고를 분석하는 중...', '설문 답변과 일치하는 공고 찾는 중...', '지역 정보를 확인하는 중...', '최적의 일자리를 선정하는 중...',
+    '토닥토닥, 고생하셨어요', '잠시 쉬어가도 괜찮아요', '내일은 더 눈부실거에요', '지금도 충분히 멋져요',
+    '신발이 화나면? 신발끈!', '피자가 웃으면? 피자헛!', '우유가 아프면? 앙팡!', '부엉이가 물에 빠지면? 첨부엉 첨부엉!',
+  ];
+  late List<String> _msgs;
   int _msgIdx = 0;
   bool _hasError = false;
   String _errMsg = '';
@@ -21,6 +27,8 @@ class _LoadingScreenState extends State<LoadingScreen> with TickerProviderStateM
   @override
   void initState() {
     super.initState();
+    // 전체 목록 셔플 후 순서대로 순환 (같은 문구 연속 방지)
+    _msgs = List.of(_allMsgs)..shuffle(Random());
     Future.doWhile(() async {
       await Future.delayed(const Duration(seconds: 3));
       if (!mounted) return false;

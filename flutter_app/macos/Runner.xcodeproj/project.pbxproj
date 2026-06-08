@@ -579,6 +579,8 @@
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				CODE_SIGNING_REQUIRED = NO;
+				OTHER_CODE_SIGN_FLAGS = "--no-strict";
 			};
 			name = Debug;
 		};
@@ -645,6 +647,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				CODE_SIGNING_REQUIRED = NO;
 				OTHER_CODE_SIGN_FLAGS = "--no-strict";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";

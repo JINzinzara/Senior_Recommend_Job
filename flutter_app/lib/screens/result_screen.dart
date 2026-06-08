@@ -185,36 +185,60 @@ class _JobCardState extends State<_JobCard> {
                         fontFamily: 'JalnanGothic',
                         fontSize: 16,
                         color: Color(0xFF8B6F47))),
+                actionsAlignment: MainAxisAlignment.center,
+                actionsPadding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
                 actions: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.pop(ctx);
-                        launchUrl(Uri.parse(
-                            'tel:${tel.replaceAll(RegExp(r'[^0-9]'), '')}'));
-                      },
-                      child: const Text('📞 전화하기',
-                          style: TextStyle(
-                              fontFamily: 'JalnanGothic',
-                              fontSize: 16,
-                              color: Color(0xFFD4A574)))),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.pop(ctx);
-                        launchUrl(Uri.parse(
-                            'sms:${tel.replaceAll(RegExp(r'[^0-9]'), '')}'));
-                      },
-                      child: const Text('💬 문자 보내기',
-                          style: TextStyle(
-                              fontFamily: 'JalnanGothic',
-                              fontSize: 16,
-                              color: Color(0xFFD4A574)))),
-                  TextButton(
-                      onPressed: () => Navigator.pop(ctx),
-                      child: const Text('취소',
-                          style: TextStyle(
-                              fontFamily: 'JalnanGothic',
-                              fontSize: 16,
-                              color: Color(0xFF8B6F47)))),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(ctx);
+                          launchUrl(Uri.parse(
+                              'tel:${tel.replaceAll(RegExp(r'[^0-9]'), '')}'));
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFD4A574),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                          elevation: 0,
+                        ),
+                        child: const Text('📞  전화하기',
+                            style: TextStyle(
+                                fontFamily: 'JalnanGothic',
+                                fontSize: 22,
+                                color: Colors.white)),
+                      ),
+                      const SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(ctx);
+                          launchUrl(Uri.parse(
+                              'sms:${tel.replaceAll(RegExp(r'[^0-9]'), '')}'));
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFF5E6D3),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                          elevation: 0,
+                        ),
+                        child: const Text('💬  문자 보내기',
+                            style: TextStyle(
+                                fontFamily: 'JalnanGothic',
+                                fontSize: 22,
+                                color: Color(0xFF5C3D2E))),
+                      ),
+                      const SizedBox(height: 6),
+                      TextButton(
+                        onPressed: () => Navigator.pop(ctx),
+                        child: const Text('취소',
+                            style: TextStyle(
+                                fontFamily: 'JalnanGothic',
+                                fontSize: 18,
+                                color: Color(0xFF8B6F47))),
+                      ),
+                    ],
+                  ),
                 ],
               ));
     } else if (link.isNotEmpty) {

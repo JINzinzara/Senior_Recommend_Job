@@ -318,21 +318,24 @@ export function buildPrompt(
   ncsResult: NCSResult,
   mappedJobs: RawJob[],
   unmappedJobs: RawJob[]
-): string {
+): { prompt: string; indexedJobs: RawJob[] } {
   const certText = answers.Q6.length > 0 ? answers.Q6.join(", ") : "없음";
   const regionText = answers.Q8 && answers.Q8 !== "전체"
     ? `${answers.Q7} ${answers.Q8}`
     : answers.Q7 || undefined;
 
+  // 인덱스 부여 (M0~, U0~) 로 AI가 원본 공고를 정확히 참조하게 함
+  const indexedJobs: RawJob[] = [...mappedJobs, ...unmappedJobs];
+
   const mappedText = mappedJobs
-    .map((j) => `- ${j.채용공고명} / ${j.모집직종} / ${j.근무형태} / ${j.근무지역.slice(0, 30)}`)
+    .map((j, i) => `[M${i}] ${j.채용공고명} / ${j.모집직종} / ${j.근무형태} / ${j.근무지역.slice(0, 30)}`)
     .join("\n") || "없음";
 
   const unmappedText = unmappedJobs
-    .map((j) => `- ${j.채용공고명} / ${j.모집직종} / ${j.근무형태} / ${j.근무지역.slice(0, 30)}`)
+    .map((j, i) => `[U${i}] ${j.채용공고명} / ${j.모집직종} / ${j.근무형태} / ${j.근무지역.slice(0, 30)}`)
     .join("\n") || "없음";
 
-  return `당신은 노인 일자리 추천 전문가입니다.
+  const prompt = `당신은 노인 일자리 추천 전문가입니다.
 아래 고령자분의 설문 응답과 실제 공고 목록을 보고, 가장 적합한 공고 최대 5개를 추천해주세요.
 
 ## 설문 응답
@@ -357,12 +360,14 @@ ${regionText ? "4" : "3"}. 설문 응답과 공고 간의 일치도를 내부적
 ${regionText ? "5" : "4"}. 추천 이유는 한 문장으로 간결하게 작성하세요 (20~30글자 이내).
 ${regionText ? "6" : "5"}. 추천 이유에서 근무 일수나 시간은 제외하세요.
 ${regionText ? "7" : "6"}. '직종 미분류' 공고도 설문 응답과 직접 비교해서 적합하다고 판단되면 추천 목록에 포함하세요.
-${regionText ? "8" : "7"}. 반드시 아래 JSON 형식으로만 답변하세요. 다른 텍스트는 포함하지 마세요.
+${regionText ? "8" : "7"}. 반드시 아래 JSON 형식으로만 답변하세요. 다른 텍스트는 포함하지 마세요. idx는 공고 목록의 [M0], [U1] 등 대괄호 안의 값을 그대로 사용하세요.
 
 {
   "recommendations": [
-    {"rank": 1, "채용공고명": "공고제목", "모집직종": "직종명", "모집요강": "근무 일수", "reason": "추천 이유"},
-    {"rank": 2, "채용공고명": "공고제목", "모집직종": "직종명", "모집요강": "근무 일수", "reason": "추천 이유"}
+    {"rank": 1, "idx": "M0", "모집직종": "직종명", "모집요강": "근무 일수", "reason": "추천 이유"},
+    {"rank": 2, "idx": "U2", "모집직종": "직종명", "모집요강": "근무 일수", "reason": "추천 이유"}
   ]
 }`;
+
+  return { prompt, indexedJobs };
 }

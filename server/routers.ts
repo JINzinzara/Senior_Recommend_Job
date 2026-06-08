@@ -59,7 +59,17 @@ export const appRouter = router({
         const sortedUnmapped = sortJobsByRegion(unmapped, userRegionKeyword, sigungu);
 
         // 토큰 절약: mapped 최대 20개, unmapped 최대 10개
-        const prompt = buildPrompt(answers, ncsResult, sortedMapped.slice(0, 20), sortedUnmapped.slice(0, 10));
+        const { prompt, indexedJobs } = buildPrompt(answers, ncsResult, sortedMapped.slice(0, 20), sortedUnmapped.slice(0, 10));
+        // indexedJobs = [...mappedJobs(0~19), ...unmappedJobs(0~9)]
+        // M{i} → indexedJobs[i], U{i} → indexedJobs[mappedCount + i]
+        const mappedCount = Math.min(sortedMapped.length, 20);
+        const resolveJob = (idx: string): RawJob | undefined => {
+          if (!idx) return undefined;
+          const type = idx[0]; // 'M' or 'U'
+          const num = parseInt(idx.slice(1), 10);
+          if (isNaN(num)) return undefined;
+          return type === 'M' ? indexedJobs[num] : indexedJobs[mappedCount + num];
+        };
 
         try {
           const client = new Anthropic({ apiKey: ENV.anthropicApiKey });
@@ -80,28 +90,19 @@ export const appRouter = router({
             parsed = { recommendations: [] };
           }
 
-          // 공고명으로 원본 데이터에서 링크·전화번호 매칭
-          const allJobsForMatch = loadJobs();
-          const findOriginalJob = (name: string) =>
-            allJobsForMatch.find((j) => j.채용공고명 === name);
-
           const recommendations = (parsed.recommendations ?? [])
             .filter((item: any) =>
-              item?.rank && item?.채용공고명 && item?.모집직종 && item?.모집요강 && item?.reason
+              item?.rank && item?.idx && item?.모집직종 && item?.모집요강 && item?.reason
             )
             .slice(0, 5)
-            .map((item: any, idx: number) => {
-              const original = findOriginalJob(String(item.채용공고명 || ""));
+            .map((item: any, i: number) => {
+              const original = resolveJob(String(item.idx || ""));
               return {
-                rank: idx + 1,
-                채용공고명: String(item.채용공고명 || ""),
+                rank: i + 1,
+                채용공고명: original?.채용공고명 || String(item.채용공고명 || ""),
                 모집직종: String(item.모집직종 || ""),
                 모집요강: String(item.모집요강 || ""),
                 reason: String(item.reason || ""),
-                matchRate:
-                  typeof item.matchRate === "number"
-                    ? Math.min(100, Math.max(0, item.matchRate))
-                    : undefined,
                 링크: original?.링크 || "",
                 contTel: original?.contTel || "",
               };

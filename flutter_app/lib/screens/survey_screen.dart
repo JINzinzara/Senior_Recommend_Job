@@ -113,7 +113,10 @@ class _SurveyScreenState extends State<SurveyScreen> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) { if (!didPop) _back(); },
+      child: Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(children: [
@@ -121,8 +124,9 @@ class _SurveyScreenState extends State<SurveyScreen> with SingleTickerProviderSt
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
             child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              GestureDetector(
+              InkWell(
                 onTap: _back,
+                borderRadius: BorderRadius.circular(14),
                 child: Container(
                   width: 48, height: 48,
                   decoration: BoxDecoration(color: const Color(0xFFF5E6D3), borderRadius: BorderRadius.circular(14)),
@@ -204,6 +208,6 @@ class _SurveyScreenState extends State<SurveyScreen> with SingleTickerProviderSt
           ),
         ]),
       ),
-    );
+    ));
   }
 }
