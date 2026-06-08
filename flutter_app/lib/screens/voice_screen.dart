@@ -117,7 +117,7 @@ class _VoiceScreenState extends State<VoiceScreen>
                   AnimatedSwitcher(
                     duration: const Duration(milliseconds: 300),
                     child: Text(
-                      _isListening ? '듣고 있어요...' : '원하는 직종을 말해주세요',
+                      _isListening ? '듣고 있어요...' : '원하는 일자리를 말해주세요',
                       key: ValueKey(_isListening),
                       textAlign: TextAlign.center,
                       style: TextStyle(

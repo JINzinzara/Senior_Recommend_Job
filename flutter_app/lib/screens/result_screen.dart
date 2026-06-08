@@ -55,7 +55,7 @@ class _ResultScreenState extends State<ResultScreen> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'AI가 ${jobs.length}개의 공고를 추천했어요',
+                '적합한 ${jobs.length}개의 공고를 추천했어요',
                 style: const TextStyle(
                     fontFamily: 'JalnanGothic',
                     fontSize: 16,
