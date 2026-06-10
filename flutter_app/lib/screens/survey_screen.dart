@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constants/regions.dart';
+import '../constants/app_theme.dart';
 import 'loading_screen.dart';
 
 class _Question {
@@ -41,6 +42,7 @@ class _SurveyScreenState extends State<SurveyScreen> with SingleTickerProviderSt
 
   late final AnimationController _fadeCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 180));
   late final Animation<double> _fadeAnim = Tween(begin: 1.0, end: 0.0).animate(_fadeCtrl);
+  final ScrollController _scrollCtrl = ScrollController();
   // _fadeAnim: 1.0(보임) → 0.0(숨김), forward=숨기기, reverse=보이기
 
   bool get _isQ7 => _step == _questions.length;
@@ -74,7 +76,13 @@ class _SurveyScreenState extends State<SurveyScreen> with SingleTickerProviderSt
     _answers[q.id] = cur;
   });
 
-  void _go(VoidCallback fn) => _fadeCtrl.forward().then((_) { fn(); _fadeCtrl.reverse(); });
+  void _go(VoidCallback fn) => _fadeCtrl.forward().then((_) {
+    fn();
+    _fadeCtrl.reverse();
+    if (_scrollCtrl.hasClients) {
+      _scrollCtrl.jumpTo(0);
+    }
+  });
 
   void _next() {
     if (!_answered) return;
@@ -109,7 +117,7 @@ class _SurveyScreenState extends State<SurveyScreen> with SingleTickerProviderSt
   }
 
   @override
-  void dispose() { _fadeCtrl.dispose(); super.dispose(); }
+  void dispose() { _fadeCtrl.dispose(); _scrollCtrl.dispose(); super.dispose(); }
 
   @override
   Widget build(BuildContext context) {
@@ -117,9 +125,15 @@ class _SurveyScreenState extends State<SurveyScreen> with SingleTickerProviderSt
       canPop: false,
       onPopInvokedWithResult: (didPop, _) { if (!didPop) _back(); },
       child: Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(children: [
+      backgroundColor: AppTheme.bg,
+      body: Stack(children: [
+        // 배경 꽃 이미지 (5% 투명도)
+        Positioned.fill(
+          child: Image.asset(AppTheme.flowerBg,
+              fit: BoxFit.cover,
+              opacity: const AlwaysStoppedAnimation(0.05)),
+        ),
+        SafeArea(child: Column(children: [
           // 헤더
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
@@ -129,24 +143,24 @@ class _SurveyScreenState extends State<SurveyScreen> with SingleTickerProviderSt
                 borderRadius: BorderRadius.circular(14),
                 child: Container(
                   width: 48, height: 48,
-                  decoration: BoxDecoration(color: const Color(0xFFF5E6D3), borderRadius: BorderRadius.circular(14)),
-                  child: const Center(child: Text('←', style: TextStyle(fontFamily:'JalnanGothic', fontSize:24, color:Color(0xFF5C3D2E)))),
+                  decoration: BoxDecoration(color: AppTheme.pinkLight, borderRadius: BorderRadius.circular(14)),
+                  child: const Center(child: Text('←', style: TextStyle(fontFamily:'JalnanGothic', fontSize:24, color:AppTheme.textDark))),
                 ),
               ),
-              Text('${_step + 1} / $_totalSteps', style: const TextStyle(fontFamily:'JalnanGothic', fontSize:18, fontWeight:FontWeight.w700, color:Color(0xFF5C3D2E))),
+              Text('${_step + 1} / $_totalSteps', style: const TextStyle(fontFamily:'JalnanGothic', fontSize:18, fontWeight:FontWeight.w700, color:AppTheme.textDark)),
               const SizedBox(width: 48),
             ]),
           ),
-          // 진행 바
+          // 진행 바 (꽃 그라데이션)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(6),
               child: LinearProgressIndicator(
                 value: (_step + 1) / _totalSteps,
                 minHeight: 8,
-                backgroundColor: const Color(0xFFE8D4B8),
-                valueColor: const AlwaysStoppedAnimation(Color(0xFFD4A574)),
+                backgroundColor: AppTheme.border,
+                valueColor: const AlwaysStoppedAnimation(AppTheme.primary),
               ),
             ),
           ),
@@ -156,11 +170,12 @@ class _SurveyScreenState extends State<SurveyScreen> with SingleTickerProviderSt
             child: FadeTransition(
               opacity: _fadeAnim,
               child: SingleChildScrollView(
+                controller: _scrollCtrl,
                 padding: const EdgeInsets.fromLTRB(20, 28, 20, 24),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                  Text(_questionText, style: const TextStyle(fontFamily:'JalnanGothic', fontSize:36, fontWeight:FontWeight.bold, color:Color(0xFF5C3D2E), height:1.4, letterSpacing:-0.5)),
+                  Text(_questionText, style: const TextStyle(fontFamily:'JalnanGothic', fontSize:36, fontWeight:FontWeight.bold, color:AppTheme.textDark, height:1.4, letterSpacing:-0.5)),
                   const SizedBox(height: 14),
-                  Text(_hintText, style: const TextStyle(fontFamily:'JalnanGothic', fontSize:16, fontWeight:FontWeight.w600, color:Color(0xFFEF4444))),
+                  Text(_hintText, style: const TextStyle(fontFamily:'JalnanGothic', fontSize:16, fontWeight:FontWeight.w600, color:Color(0xFFD95F3B))),
                   const SizedBox(height: 32),
                   ..._opts.map((opt) {
                     final sel = _isSelected(opt);
@@ -172,12 +187,23 @@ class _SurveyScreenState extends State<SurveyScreen> with SingleTickerProviderSt
                           duration: const Duration(milliseconds: 150),
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color: sel ? const Color(0xFFD4A574) : Colors.white,
+                            color: sel ? AppTheme.primary : Colors.white,
                             borderRadius: BorderRadius.circular(18),
-                            border: Border.all(color: sel ? const Color(0xFFD4A574) : const Color(0xFFE8D4B8), width: 1.5),
+                            border: Border.all(
+                              color: sel ? AppTheme.primary : AppTheme.border,
+                              width: 1.5,
+                            ),
+                            boxShadow: sel ? [
+                              BoxShadow(
+                                color: AppTheme.primary.withValues(alpha: 0.25),
+                                blurRadius: 8,
+                                offset: const Offset(0, 3),
+                              )
+                            ] : null,
                           ),
                           child: Center(child: Text(opt, textAlign: TextAlign.center,
-                            style: TextStyle(fontFamily:'JalnanGothic', fontSize:22, fontWeight:FontWeight.bold, color: sel ? Colors.white : const Color(0xFF5C3D2E)))),
+                            style: TextStyle(fontFamily:'JalnanGothic', fontSize:22, fontWeight:FontWeight.bold,
+                              color: sel ? Colors.white : AppTheme.textDark))),
                         ),
                       ),
                     );
@@ -189,25 +215,48 @@ class _SurveyScreenState extends State<SurveyScreen> with SingleTickerProviderSt
           // 다음 버튼
           Container(
             padding: const EdgeInsets.fromLTRB(20, 12, 20, 16),
-            decoration: const BoxDecoration(color: Colors.white, border: Border(top: BorderSide(color: Color(0xFFE8D4B8)))),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border(top: BorderSide(color: AppTheme.border)),
+            ),
             child: SizedBox(
               width: double.infinity, height: 68,
-              child: ElevatedButton(
-                onPressed: _answered ? _next : null,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: _answered ? const Color(0xFFD4A574) : const Color(0xFFD4C4B0),
-                  foregroundColor: _answered ? Colors.white : const Color(0xFF8B6F47),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-                  elevation: 0,
-                  disabledBackgroundColor: const Color(0xFFD4C4B0),
-                ),
-                child: Text(_isLast ? '결과 보기' : '다음',
-                  style: const TextStyle(fontFamily:'JalnanGothic', fontSize:22, fontWeight:FontWeight.bold)),
-              ),
+              child: _answered
+                ? DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: AppTheme.primaryGradient,
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [BoxShadow(
+                        color: AppTheme.primary.withValues(alpha: 0.30),
+                        blurRadius: 10, offset: const Offset(0, 4))],
+                    ),
+                    child: ElevatedButton(
+                      onPressed: _next,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                        elevation: 0,
+                      ),
+                      child: Text(_isLast ? '결과 보기' : '다음',
+                        style: const TextStyle(fontFamily:'JalnanGothic', fontSize:22, fontWeight:FontWeight.bold)),
+                    ),
+                  )
+                : ElevatedButton(
+                    onPressed: null,
+                    style: ElevatedButton.styleFrom(
+                      disabledBackgroundColor: AppTheme.border,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                      elevation: 0,
+                    ),
+                    child: Text(_isLast ? '결과 보기' : '다음',
+                      style: const TextStyle(fontFamily:'JalnanGothic', fontSize:22, fontWeight:FontWeight.bold, color:AppTheme.textLight)),
+                  ),
             ),
           ),
-        ]),
-      ),
+        ])),
+      ]),
     ));
   }
 }

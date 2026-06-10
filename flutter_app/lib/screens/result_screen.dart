@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../services/api_service.dart';
+import '../constants/app_theme.dart';
 import 'home_screen.dart';
 
 class ResultScreen extends StatefulWidget {
@@ -24,8 +25,12 @@ class _ResultScreenState extends State<ResultScreen> {
   Widget build(BuildContext context) {
     final jobs = widget.recommendations;
     return Scaffold(
-      backgroundColor: const Color(0xFFFFF8F0),
-      body: SafeArea(
+      backgroundColor: AppTheme.bg,
+      body: Stack(children: [
+        // 배경 꽃 이미지 (5%)
+        Positioned.fill(child: Image.asset(AppTheme.flowerBg,
+            fit: BoxFit.cover, opacity: const AlwaysStoppedAnimation(0.05))),
+        SafeArea(
         child: Column(children: [
           // ── 헤더 ──
           Padding(
@@ -36,7 +41,7 @@ class _ResultScreenState extends State<ResultScreen> {
                       fontFamily: 'JalnanGothic',
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF5C3D2E))),
+                      color: AppTheme.textDark)),
               TextButton(
                 onPressed: () => Navigator.pushAndRemoveUntil(
                     context,
@@ -46,7 +51,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     style: TextStyle(
                         fontFamily: 'JalnanGothic',
                         fontSize: 16,
-                        color: Color(0xFFD4A574))),
+                        color: AppTheme.primary)),
               ),
             ]),
           ),
@@ -59,7 +64,7 @@ class _ResultScreenState extends State<ResultScreen> {
                 style: const TextStyle(
                     fontFamily: 'JalnanGothic',
                     fontSize: 16,
-                    color: Color(0xFF8B6F47)),
+                    color: AppTheme.textMid),
               ),
             ),
           ),
@@ -99,8 +104,8 @@ class _ResultScreenState extends State<ResultScreen> {
                             height: 8,
                             decoration: BoxDecoration(
                               color: active
-                                  ? const Color(0xFFD4A574)
-                                  : const Color(0xFFE8D4B8),
+                                  ? AppTheme.primary
+                                  : AppTheme.border,
                               borderRadius: BorderRadius.circular(4),
                             ),
                           );
@@ -110,28 +115,29 @@ class _ResultScreenState extends State<ResultScreen> {
                   ]),
           ),
         ]),
-      ),
+        ),  // SafeArea
+      ]),  // Stack
     );
   }
 
   Widget _buildEmpty(BuildContext context) => Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           const Icon(Icons.search_off_rounded,
-              size: 72, color: Color(0xFFD4A574)),
+              size: 72, color: AppTheme.primary),
           const SizedBox(height: 24),
           const Text('추천 공고를 찾지 못했어요',
               style: TextStyle(
                   fontFamily: 'JalnanGothic',
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF5C3D2E))),
+                  color: AppTheme.textDark)),
           const SizedBox(height: 12),
           const Text('지역을 변경하거나 다시 시도해보세요',
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontFamily: 'JalnanGothic',
                   fontSize: 16,
-                  color: Color(0xFF8B6F47))),
+                  color: AppTheme.textMid)),
           const SizedBox(height: 32),
           ElevatedButton(
             onPressed: () => Navigator.pushAndRemoveUntil(
@@ -139,7 +145,7 @@ class _ResultScreenState extends State<ResultScreen> {
                 MaterialPageRoute(builder: (_) => const HomeScreen()),
                 (_) => false),
             style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFD4A574),
+                backgroundColor: AppTheme.primary,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14)),
                 padding: const EdgeInsets.symmetric(
@@ -179,12 +185,12 @@ class _JobCardState extends State<_JobCard> {
                     style: TextStyle(
                         fontFamily: 'JalnanGothic',
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF5C3D2E))),
+                        color: AppTheme.textDark)),
                 content: Text(tel,
                     style: const TextStyle(
                         fontFamily: 'JalnanGothic',
                         fontSize: 16,
-                        color: Color(0xFF8B6F47))),
+                        color: AppTheme.textMid)),
                 actionsAlignment: MainAxisAlignment.center,
                 actionsPadding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
                 actions: [
@@ -198,7 +204,7 @@ class _JobCardState extends State<_JobCard> {
                               'tel:${tel.replaceAll(RegExp(r'[^0-9]'), '')}'));
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFD4A574),
+                          backgroundColor: AppTheme.primary,
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                           elevation: 0,
@@ -226,7 +232,7 @@ class _JobCardState extends State<_JobCard> {
                             style: TextStyle(
                                 fontFamily: 'JalnanGothic',
                                 fontSize: 22,
-                                color: Color(0xFF5C3D2E))),
+                                color: AppTheme.textDark)),
                       ),
                       const SizedBox(height: 6),
                       TextButton(
@@ -235,7 +241,7 @@ class _JobCardState extends State<_JobCard> {
                             style: TextStyle(
                                 fontFamily: 'JalnanGothic',
                                 fontSize: 18,
-                                color: Color(0xFF8B6F47))),
+                                color: AppTheme.textMid)),
                       ),
                     ],
                   ),
@@ -256,10 +262,10 @@ class _JobCardState extends State<_JobCard> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFE8D4B8), width: 1.5),
+        border: Border.all(color: AppTheme.border, width: 1.5),
         boxShadow: [
           BoxShadow(
-              color: const Color(0xFFD4A574).withValues(alpha: 0.12),
+              color: AppTheme.primary.withValues(alpha: 0.12),
               blurRadius: 16,
               offset: const Offset(0, 6))
         ],
@@ -273,7 +279,7 @@ class _JobCardState extends State<_JobCard> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
-                  color: const Color(0xFFD4A574),
+                  color: AppTheme.primary,
                   borderRadius: BorderRadius.circular(8)),
               child: Text('${widget.rank}위',
                   style: const TextStyle(
@@ -289,7 +295,7 @@ class _JobCardState extends State<_JobCard> {
                       fontFamily: 'JalnanGothic',
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF5C3D2E),
+                      color: AppTheme.textDark,
                       height: 1.3)),
             ),
           ]),
@@ -305,7 +311,7 @@ class _JobCardState extends State<_JobCard> {
                 style: const TextStyle(
                     fontFamily: 'JalnanGothic',
                     fontSize: 14,
-                    color: Color(0xFF8B6F47),
+                    color: AppTheme.textMid,
                     fontWeight: FontWeight.w600)),
           ),
           const SizedBox(height: 14),
@@ -314,15 +320,15 @@ class _JobCardState extends State<_JobCard> {
             width: double.infinity,
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: const Color(0xFFFFF8F0),
+              color: AppTheme.bg,
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFFE8D4B8)),
+              border: Border.all(color: AppTheme.border),
             ),
             child: Text('💡 ${job.reason}',
                 style: const TextStyle(
                     fontFamily: 'JalnanGothic',
                     fontSize: 15,
-                    color: Color(0xFF5C3D2E),
+                    color: AppTheme.textDark,
                     height: 1.5)),
           ),
           const SizedBox(height: 12),
@@ -335,13 +341,13 @@ class _JobCardState extends State<_JobCard> {
                       fontFamily: 'JalnanGothic',
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF8B6F47))),
+                      color: AppTheme.textMid)),
               const SizedBox(width: 4),
               Icon(
                   _expanded
                       ? Icons.keyboard_arrow_up
                       : Icons.keyboard_arrow_down,
-                  color: const Color(0xFF8B6F47),
+                  color: AppTheme.textMid,
                   size: 18),
             ]),
           ),
@@ -351,7 +357,7 @@ class _JobCardState extends State<_JobCard> {
                 style: const TextStyle(
                     fontFamily: 'JalnanGothic',
                     fontSize: 14,
-                    color: Color(0xFF8B6F47),
+                    color: AppTheme.textMid,
                     height: 1.6)),
             const SizedBox(height: 12),
           ],
@@ -364,7 +370,7 @@ class _JobCardState extends State<_JobCard> {
               child: ElevatedButton(
                 onPressed: _apply,
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFD4A574),
+                    backgroundColor: AppTheme.primary,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14)),
                     elevation: 0),
